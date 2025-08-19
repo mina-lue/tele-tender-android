@@ -1,19 +1,21 @@
 import { icons } from '@/constants/icons';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from 'expo-router';
 import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AppBar = () => {
     const [isMenuVisible, setMenuVisible] = useState(false);
+    const navigation = useNavigation();
 
     const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
   };
 
-  const handleMenuItemPress = (item : any) => {
+  const handleMenuItemPress = (item : string) => {
     console.log(`Navigating to ${item}`);
-    // Hide the menu after an item is pressed
+    navigation.navigate(`${item}`);
     setMenuVisible(false);
   };
 
@@ -35,7 +37,7 @@ const AppBar = () => {
             <View className="absolute top-12 right-0 w-60 bg-backgroundSec rounded-md shadow-xl py-2 z-50">
               <TouchableOpacity 
                 className="p-3 border-b border-gray-500 flex-row"
-                onPress={() => handleMenuItemPress('Profile')}
+                onPress={() => handleMenuItemPress('profile')}
               >
                 <Ionicons name="person-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">Profile</Text>
@@ -43,10 +45,18 @@ const AppBar = () => {
               
               <TouchableOpacity 
                 className="p-3 border-b border-gray-500 flex-row"
-                onPress={() => handleMenuItemPress('About')}
+                onPress={() => handleMenuItemPress('about')}
               >
                 <Ionicons name="information-circle-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">About</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                className="p-3 border-b border-gray-500 flex-row"
+                onPress={() => handleMenuItemPress('index')}
+              >
+                <Ionicons name="document-text-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
+                <Text className="text-gray-200">Tenders</Text>
               </TouchableOpacity>
             </View>
           )}

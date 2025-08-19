@@ -20,7 +20,7 @@ const TenderCard = ({ id, buyer, details, openAt, closeAt }: Props) => {
             <View className="flex-row items-center gap-1 ml-2">
               <FontAwesome name="building" size={24} color="#22c55e" />
               <Text
-                className="font-semibold sm:text-xl text-green-600"
+                className="font-extrabold text-xl  text-green-600 capitalize"
                 numberOfLines={1}
               >
                 {buyer}
@@ -31,7 +31,7 @@ const TenderCard = ({ id, buyer, details, openAt, closeAt }: Props) => {
               <Text className="text-[#709060]"> closes at </Text>
             </View>
           </View>
-          <Text className="text-lg p-2 text-[#b1af9d] ont-inter-regular" numberOfLines={2}>
+          <Text className="text-lg p-2 text-gray-300 first-letter:capitalize" numberOfLines={2}>
             {details}
           </Text>
           <View className="flex justify-between items-center">
