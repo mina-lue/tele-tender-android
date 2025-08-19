@@ -34,16 +34,18 @@ const AppBar = () => {
           {isMenuVisible && (
             <View className="absolute top-12 right-0 w-60 bg-backgroundSec rounded-md shadow-xl py-2 z-50">
               <TouchableOpacity 
-                className="p-3 border-b border-gray-500"
+                className="p-3 border-b border-gray-500 flex-row"
                 onPress={() => handleMenuItemPress('Profile')}
               >
+                <Ionicons name="person-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">Profile</Text>
               </TouchableOpacity>
               
               <TouchableOpacity 
-                className="p-3"
+                className="p-3 border-b border-gray-500 flex-row"
                 onPress={() => handleMenuItemPress('About')}
               >
+                <Ionicons name="information-circle-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">About</Text>
               </TouchableOpacity>
             </View>

@@ -148,7 +148,7 @@ export default function Index() {
     >
       <ScrollView className="flex-1 px-2 "
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingTop: 10, minHeight: "100%" }}
+      contentContainerStyle={{ paddingTop: 2, minHeight: "100%" }}
       >
         <FlatList
           data={tenders}
