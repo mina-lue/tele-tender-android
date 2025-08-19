@@ -27,15 +27,15 @@ const TenderCard = ({ id, buyer, details, openAt, closeAt }: Props) => {
               </Text>
             </View>
             <View className="flex-row items-center gap-1 text-sm  mr-2 text-[green-200]">
-              <MaterialIcons name="calendar-month" size={16} color="#bbf7d0" />
-              <Text className="text-green-200"> closes at </Text>
+              <MaterialIcons name="calendar-month" size={16} color="#709060]" />
+              <Text className="text-[#709060]"> closes at </Text>
             </View>
           </View>
-          <Text className="text-lg p-2 text-gray-100 ont-inter-regular" numberOfLines={2}>
+          <Text className="text-lg p-2 text-[#b1af9d] ont-inter-regular" numberOfLines={2}>
             {details}
           </Text>
           <View className="flex justify-between items-center">
-            <Text className="text-green-200 ml-2 text-xs">{"timeString"}</Text>
+            <Text className="text-[#709060] ml-2 text-xs">{"timeString"}</Text>
           </View>
         </View>
       </TouchableOpacity>

@@ -10,10 +10,6 @@ module.exports = {
         backgroundSec: '#22734B',
       }
     },
-    fontFamily: {
-        'inter-regular': ['Inter-Regular'],
-        'inter-bold': ['Inter-Bold'],
-      },
   },
   plugins: [],
 }
