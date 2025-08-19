@@ -19,7 +19,7 @@ const AppBar = () => {
 
   return (
     <SafeAreaView edges={['top']} className="bg-backgroundSec shadow-lg">
-      <View className="flex-row items-center justify-between p-2 px-4">
+      <View className="flex-row items-center justify-between p-2 px-4 ">
         <TouchableOpacity>
             <Image source={icons.logo} className="w-10 h-10 rounded-full" />
          </TouchableOpacity>

@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/apple-touch-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#003C24"
       },
       "edgeToEdgeEnabled": true
     },
@@ -33,7 +33,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
