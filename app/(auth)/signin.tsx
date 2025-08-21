@@ -1,4 +1,5 @@
 import { useRouter } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -25,7 +26,6 @@ const LoginScreen = () => {
 
   // Handle the sign-in form submission
   const handleSignIn = async () => {
-    router.push('/'); // TODO remove Navigate to home screen for demonstration purposes 
     // Basic client-side validation
     if (!validateEmail(email) || !validatePassword(password)) {
       setAuthError('Please enter a valid email and a password of at least 6 characters.');
@@ -36,8 +36,7 @@ const LoginScreen = () => {
     setAuthError(null);
 
     try {
-      // Replace this with your actual NestJS sign-in endpoint
-      const response = await fetch('YOUR_NESTJS_API_URL/auth/login', {
+      const response = await fetch('https://tendering-app-be.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,14 +50,19 @@ const LoginScreen = () => {
         setAuthError(errorData.message || 'An authentication error occurred. Please try again.');
         return;
       }
-
-      // If the login is successful, you would typically receive a token
       const data = await response.json();
       console.log('Login successful:', data);
 
-      // Save the token securely (e.g., using Expo SecureStore)
-      // and navigate to the home screen
-      // Example: await SecureStore.setItemAsync('userToken', data.token);
+    
+       await SecureStore.setItemAsync('userToken', data.backendTokens.accessToken);
+       await SecureStore.setItemAsync('userRefreshToken', data.backendTokens.refreshToken);
+       await SecureStore.setItemAsync('userExpiresIn', data.backendTokens.expiresAt.toString());
+       await SecureStore.setItemAsync('user', JSON.stringify({
+           id: data.user.id,
+           email: data.user.email,
+           name: data.user.name,
+           role: data.user.role
+       }));
       router.push('/');
     } catch (error) {
       console.error('Sign in error:', error);
