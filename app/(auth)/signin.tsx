@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // This is a simplified version of your schema for demonstration.
@@ -101,7 +101,9 @@ const LoginScreen = () => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <ActivityIndicator color="#fff" />
+            <View className='flex-row'>
+              <Text className='text-white'>Signing in ...</Text>
+            </View>
           ) : (
             <Text className="text-white text-lg font-semibold">Sign In</Text>
           )}

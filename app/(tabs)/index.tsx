@@ -1,146 +1,32 @@
 import TenderCard from "@/components/tenderCard";
-import { FlatList, ScrollView, View } from "react-native";
+import { fetchTenders } from "@/services/api";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, ScrollView, Text, View } from "react-native";
 
 export default function Index() {
 
-  const tenders = [
-  {
-    id: 1,
-    details: "this demo tender to be rendered for the first time on the rendered application online.",
-    organizationId: 1,
-    openAt: "2025-08-14T01:39:00.000Z",
-    closeAt: "2025-08-09T04:39:00.000Z",
-    document_buy_option: true,
-    urlToDoc: "https://res.cloudinary.com/dwvt63sbv/image/upload/v1754692786/qfoebsvaggi2rm2vclau.pdf",
-    documentPrice: null,
-    status: "OPEN",
-    createdAt: "2025-08-08T22:39:50.694Z",
-    updatedAt: "2025-08-08T22:39:50.694Z",
-    organization: {
-      id: 1,
-      name: "Minalu Mesele"
+  const [tenders, setTenders] = useState<any>(null);
+  const [tendersError, setTendersError] = useState(false);
+  const [tendersLoading, setTendersLoading] = useState(false);
+
+ 
+
+  useEffect(() => {
+
+    const loadTenders = async ()=>{
+      setTendersLoading(false)
+      try{
+        const tendersLoaded = await fetchTenders();
+        setTenders(tendersLoaded);
+      } catch (e: any) {
+        setTendersError(e.message)
+      } finally {
+        setTendersLoading(false);
+      }
     }
-  },
-  {
-    id: 2,
-    details: "kkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
-    organizationId: 1,
-    openAt: "2025-08-11T10:15:00.000Z",
-    closeAt: "2025-08-14T10:15:00.000Z",
-    document_buy_option: true,
-    urlToDoc: "https://res.cloudinary.com/dwvt63sbv/image/upload/v1754723772/aexbhnkdifgdr2pwaa1u.pdf",
-    documentPrice: null,
-    status: "OPEN",
-    createdAt: "2025-08-09T07:16:29.448Z",
-    updatedAt: "2025-08-09T07:16:29.448Z",
-    organization: {
-      id: 1,
-      name: "Minalu Mesele"
-    }
-  },
-  {
-    id: 3,
-    details: "the late update tender listing page has been updated.",
-    organizationId: 6,
-    openAt: "2025-08-15T15:05:00.000Z",
-    closeAt: "2025-08-22T15:05:00.000Z",
-    document_buy_option: true,
-    urlToDoc: "https://res.cloudinary.com/dwvt63sbv/image/upload/v1755259531/wr0wraxvy9ua3ikxlnr6.pdf",
-    documentPrice: "200",
-    status: "OPEN",
-    createdAt: "2025-08-15T12:05:41.874Z",
-    updatedAt: "2025-08-15T12:05:41.874Z",
-    organization: {
-      id: 6,
-      name: "Buyer one"
-    }
-  },
-  {
-    id: 4,
-    details: "the late update tender listing page has been updated.",
-    organizationId: 6,
-    openAt: "2025-08-15T15:05:00.000Z",
-    closeAt: "2025-08-22T15:05:00.000Z",
-    document_buy_option: true,
-    urlToDoc: "https://res.cloudinary.com/dwvt63sbv/image/upload/v1755259531/wr0wraxvy9ua3ikxlnr6.pdf",
-    documentPrice: "200",
-    status: "OPEN",
-    createdAt: "2025-08-15T12:05:41.874Z",
-    updatedAt: "2025-08-15T12:05:41.874Z",
-    organization: {
-      id: 6,
-      name: "Buyer one"
-    }
-  },
-  {
-    id: 5,
-    details: "the late update tender listing page has been updated.",
-    organizationId: 6,
-    openAt: "2025-08-15T15:05:00.000Z",
-    closeAt: "2025-08-22T15:05:00.000Z",
-    document_buy_option: true,
-    urlToDoc: "https://res.cloudinary.com/dwvt63sbv/image/upload/v1755259531/wr0wraxvy9ua3ikxlnr6.pdf",
-    documentPrice: "200",
-    status: "OPEN",
-    createdAt: "2025-08-15T12:05:41.874Z",
-    updatedAt: "2025-08-15T12:05:41.874Z",
-    organization: {
-      id: 6,
-      name: "Buyer one"
-    }
-  },
-  {
-    id: 6,
-    details: "the late update tender listing page has been updated.",
-    organizationId: 6,
-    openAt: "2025-08-15T15:05:00.000Z",
-    closeAt: "2025-08-22T15:05:00.000Z",
-    document_buy_option: true,
-    urlToDoc: "https://res.cloudinary.com/dwvt63sbv/image/upload/v1755259531/wr0wraxvy9ua3ikxlnr6.pdf",
-    documentPrice: "200",
-    status: "OPEN",
-    createdAt: "2025-08-15T12:05:41.874Z",
-    updatedAt: "2025-08-15T12:05:41.874Z",
-    organization: {
-      id: 6,
-      name: "Buyer one"
-    }
-  },
-  {
-    id: 7,
-    details: "the late update tender listing page has been updated.",
-    organizationId: 6,
-    openAt: "2025-08-15T15:05:00.000Z",
-    closeAt: "2025-08-22T15:05:00.000Z",
-    document_buy_option: true,
-    urlToDoc: "https://res.cloudinary.com/dwvt63sbv/image/upload/v1755259531/wr0wraxvy9ua3ikxlnr6.pdf",
-    documentPrice: "200",
-    status: "OPEN",
-    createdAt: "2025-08-15T12:05:41.874Z",
-    updatedAt: "2025-08-15T12:05:41.874Z",
-    organization: {
-      id: 6,
-      name: "Buyer one"
-    }
-  },
-  {
-    id: 8,
-    details: "the late update tender listing page has been updated.the late update tender listing page has been updated.the late update tender listing page has been updated.the late update tender listing page has been updated.",
-    organizationId: 6,
-    openAt: "2025-08-15T15:05:00.000Z",
-    closeAt: "2025-08-22T15:05:00.000Z",
-    document_buy_option: true,
-    urlToDoc: "https://res.cloudinary.com/dwvt63sbv/image/upload/v1755259531/wr0wraxvy9ua3ikxlnr6.pdf",
-    documentPrice: "200",
-    status: "OPEN",
-    createdAt: "2025-08-15T12:05:41.874Z",
-    updatedAt: "2025-08-15T12:05:41.874Z",
-    organization: {
-      id: 6,
-      name: "Buyer one"
-    }
-  }
-];
+
+    loadTenders();
+  }, [])
 
   return (
     <View
@@ -150,15 +36,19 @@ export default function Index() {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingTop: 2, minHeight: "100%" }}
       >
-        <FlatList
+        {tendersLoading && <ActivityIndicator size="large" color="#0000ff" className="mt-10 self-center" />}
+        {tendersError && <View className="flex-1 items-center justify-center mt-10"> <Text>Error loading tenders</Text> </View>}
+        {tenders && (<FlatList
           data={tenders}
           renderItem={({ item: tender }) => (
-            <TenderCard {...tender} buyer={tender.organization.name} />
+            <TenderCard {...tender} buyerId={tender.organizationId} />
           )}
             keyExtractor={(tender) => String(tender.id)}
             className="mt-2 pb-18"
             scrollEnabled={false}
-          />
+          />)}
+
+
       </ScrollView>
     </View>
   );

@@ -1,27 +1,46 @@
 import { icons } from '@/constants/icons';
+import { User } from '@/lib/domain/user.model';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from 'expo-router';
-import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AppBar = () => {
     const [isMenuVisible, setMenuVisible] = useState(false);
-    const navigation = useNavigation();
+    const [user, setUser] = useState<User | null>(null);
+    const router = useRouter();
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const userLoggedIn = await SecureStore.getItemAsync('user');
+
+            setUser(userLoggedIn ? JSON.parse(userLoggedIn) : null);
+        };
+
+        fetchUser();
+    }, []);
+
 
     const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
   };
 
-  const handleMenuItemPress = (item : string) => {
-    navigation.navigate(`${item}`);
+  const handleMenuItemPress = (item: '/profile' | '/about' | '/') => {
+    router.push(item);
+    setMenuVisible(false);
+  };
+
+  const handleLogoPress = () => {
+    router.push('/');
     setMenuVisible(false);
   };
 
   return (
     <SafeAreaView edges={['top']} className="bg-backgroundSec shadow-lg">
       <View className="flex-row items-center justify-between p-2 px-4 ">
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleLogoPress}>
             <Image source={icons.logo} className="w-10 h-10 rounded-full" />
          </TouchableOpacity>
         
@@ -36,7 +55,7 @@ const AppBar = () => {
             <View className="absolute top-12 right-0 w-60 bg-backgroundSec rounded-md shadow-xl py-2 z-50">
               <TouchableOpacity 
                 className="p-3 border-b border-gray-500 flex-row"
-                onPress={() => handleMenuItemPress('profile')}
+                onPress={() => handleMenuItemPress('/profile')}
               >
                 <Ionicons name="person-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">Profile</Text>
@@ -44,7 +63,7 @@ const AppBar = () => {
               
               <TouchableOpacity 
                 className="p-3 border-b border-gray-500 flex-row"
-                onPress={() => handleMenuItemPress('about')}
+                onPress={() => handleMenuItemPress('/about')}
               >
                 <Ionicons name="information-circle-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">About</Text>
@@ -52,11 +71,19 @@ const AppBar = () => {
 
               <TouchableOpacity 
                 className="p-3 border-b border-gray-500 flex-row"
-                onPress={() => handleMenuItemPress('index')}
+                onPress={() => handleMenuItemPress('/')}
               >
                 <Ionicons name="document-text-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">Tenders</Text>
               </TouchableOpacity>
+
+              {user?.role === 'BUYER' &&(<TouchableOpacity 
+                className="p-3 border-b border-gray-500 flex-row"
+                onPress={() => handleMenuItemPress('/')}
+              >
+                <Ionicons name="document-text-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
+                <Text className="text-gray-200">Post Tender</Text>
+              </TouchableOpacity>)}
             </View>
           )}
         </View>

@@ -1,3 +1,6 @@
+'use client'
+import { Buyer } from "@/lib/domain/buyer.model";
+import { fetchBuyer } from "@/services/api";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -5,16 +8,25 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
   id: number;
-  buyer: string;
+  buyerId : string;
   details: string;
   openAt: string;
   closeAt: string;
 }
 
-const TenderCard = ({ id, buyer, details, openAt, closeAt }: Props) => {
+const TenderCard = ({ id, buyerId, details, openAt, closeAt }: Props) => {
+  const [buyer, setBuyer] = useState<Buyer | undefined>();
 
   const [timeString, setTimeString] = useState('');
 
+  useEffect(() => {
+    const loadBuyer = async () => {
+      const buyerData = await fetchBuyer(buyerId);
+      setBuyer(buyerData);
+    };
+
+    loadBuyer();
+  }, [buyerId]);
 
   const getRelativeTime = () => {
     // Get the current time and the post's update time
@@ -65,7 +77,7 @@ const TenderCard = ({ id, buyer, details, openAt, closeAt }: Props) => {
                 className="font-extrabold text-xl  text-green-600 capitalize"
                 numberOfLines={1}
               >
-                {buyer}
+                {buyer?.name}
               </Text>
             </View> |
           </View>
