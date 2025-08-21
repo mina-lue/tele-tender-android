@@ -156,7 +156,7 @@ export default function Index() {
             <TenderCard {...tender} buyer={tender.organization.name} />
           )}
             keyExtractor={(tender) => String(tender.id)}
-            className="mt-2 pb-32"
+            className="mt-2 pb-18"
             scrollEnabled={false}
           />
       </ScrollView>

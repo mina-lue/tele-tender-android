@@ -25,6 +25,7 @@ const LoginScreen = () => {
 
   // Handle the sign-in form submission
   const handleSignIn = async () => {
+    router.push('/'); // TODO remove Navigate to home screen for demonstration purposes 
     // Basic client-side validation
     if (!validateEmail(email) || !validatePassword(password)) {
       setAuthError('Please enter a valid email and a password of at least 6 characters.');

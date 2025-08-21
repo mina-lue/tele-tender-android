@@ -14,7 +14,6 @@ const AppBar = () => {
   };
 
   const handleMenuItemPress = (item : string) => {
-    console.log(`Navigating to ${item}`);
     navigation.navigate(`${item}`);
     setMenuVisible(false);
   };
