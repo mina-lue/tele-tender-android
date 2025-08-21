@@ -28,8 +28,8 @@ const TenderDetails = () => {
 
   return (
     <>
-      {tenderLoadingError && <Text className="text-red-500">{tenderLoadingError}</Text>}
-      {loading && <Text className="text-gray-500">Loading...</Text>}
+      {tenderLoadingError && <Text className="text-red-500 bg-background flex-1 items-center justify-center">{tenderLoadingError}</Text>}
+      {loading && <Text className="text-gray-500 bg-background flex-1 items-center justify-center">Loading...</Text>}
 
     {tender &&(<View className="bg-background flex-1 p-4">
       <Text className="text-gray-200 text-2xl">Buyer</Text>

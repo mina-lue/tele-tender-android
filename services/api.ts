@@ -1,5 +1,6 @@
 import { Buyer } from '@/lib/domain/buyer.model';
 import { Tender } from '@/lib/domain/tender.model';
+import { User } from '@/lib/domain/user.model';
 import * as SecureStore from 'expo-secure-store';
 
 export const TENDERS_CONFIG =  async () =>({
@@ -61,6 +62,48 @@ export const fetchTenderDetails = async (tenderId: string) : Promise<Tender> => 
 
   const data = await response.json();
   console.log('Fetched tender:', data);
+  return data;
+};
+
+export const createTender = async (tenderData: Partial<Tender>) : Promise<Tender> => {
+  const config = await TENDERS_CONFIG();
+
+  console.log(`creating tender at ${config.API_URL}/tenders`)
+  const response = await fetch(`https://tendering-app-be.onrender.com/api/tenders`, {
+    method: 'POST',
+    headers: {
+      ...config.headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(tenderData)
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to create tender');
+  }
+
+  const data = await response.json();
+  console.log('Created tender:', data);
+  return data;
+};
+
+export const getUserData = async (): Promise<User> => {
+  const config = await TENDERS_CONFIG();
+  const user = await SecureStore.getItemAsync('user');
+  const userId = user ? JSON.parse(user).id : null;
+
+  console.log(`fetching ${config.API_URL}/users/me`)
+  const response = await fetch(`https://tendering-app-be.onrender.com/api/users/${userId}`, {
+    method: 'GET',
+    headers: config.headers
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch user data');
+  }
+
+  const data = await response.json();
+  console.log('Fetched user data:', data);
   return data;
 };
 

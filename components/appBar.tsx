@@ -27,7 +27,7 @@ const AppBar = () => {
     setMenuVisible(!isMenuVisible);
   };
 
-  const handleMenuItemPress = (item: '/profile' | '/about' | '/') => {
+  const handleMenuItemPress = (item: '/profile' | '/about' | '/' | '/tenders/new') => {
     router.push(item);
     setMenuVisible(false);
   };
@@ -47,7 +47,11 @@ const AppBar = () => {
         {/* Hamburger Menu Icon */}
         <View className="relative">
           <TouchableOpacity onPress={toggleMenu} className="pr-2">
-            <Ionicons name="menu" size={32} color="#e5e7eb" />
+            {isMenuVisible ? (
+              <Ionicons name="close" size={32} color="#e5e7eb" />
+            ) : (
+              <Ionicons name="menu" size={32} color="#e5e7eb" />
+            )}
           </TouchableOpacity>
           
           {/* Dropdown Menu */}
@@ -79,9 +83,9 @@ const AppBar = () => {
 
               {user?.role === 'BUYER' &&(<TouchableOpacity 
                 className="p-3 border-b border-gray-500 flex-row"
-                onPress={() => handleMenuItemPress('/')}
+                onPress={() => handleMenuItemPress('/tenders/new')}
               >
-                <Ionicons name="document-text-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
+                <Ionicons name="add-circle-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">Post Tender</Text>
               </TouchableOpacity>)}
             </View>
