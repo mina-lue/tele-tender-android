@@ -1,16 +1,8 @@
-// app/(auth)/signup.tsx  — Expo + nativewind version of your Next.js signup page
-// Packages you’ll need:
-//   expo install expo-document-picker
-//   npm i react-hook-form zod @hookform/resolvers nativewind @react-native-picker/picker
-//   expo install react-native-svg (peer of nativewind)
-// (Optional) If you use Expo Router: npm i expo-router
-// Env vars (app.json or .env):
-//   EXPO_PUBLIC_BACKEND_URL, EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME, EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET
-
 import { AntDesign } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Picker } from "@react-native-picker/picker";
 import * as DocumentPicker from "expo-document-picker";
+import { useRouter } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -24,13 +16,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-// If you’re using Expo Router. Otherwise replace with your navigation solution.
-import { useRouter } from "expo-router";
 
-// Adjust this import to your project structure (shared schemas/types)
-// import { buyerSignupSchema, vendorSignupSchema, VendorSignup, BuyerSignup } from "@/lib/schemas/auth";
-// For this screen we’ll just import the schemas; if you don’t share them yet, stub them or keep types as any.
 import { buyerSignupSchema, vendorSignupSchema } from "@/lib/schemas/auth";
+import { register } from "@/services/api";
 
 const backend_url = process.env.EXPO_PUBLIC_BACKEND_URL as string;
 const CLOUD_NAME = process.env.EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME as string;
@@ -97,12 +85,11 @@ const SignupScreen = () => {
         name: asset.name ?? "upload",
         type: guessedType,
       });
-      data.append("upload_preset", UPLOAD_PRESET);
+      data.append("upload_preset", 'tender-app');
 
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/dwvt63sbv/upload`, {
         method: "POST",
         body: data,
-        // Do NOT manually set Content-Type; let fetch set the boundary
       });
 
       if (!res.ok) {
@@ -125,16 +112,7 @@ const SignupScreen = () => {
       const { confirmPassword, ...payload } = values as any;
       const updatePayload = { ...payload, urlToDoc, approved: true };
 
-      const res = await fetch(`${backend_url}/api/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatePayload),
-      });
-
-      if (res.status !== 201) {
-        const txt = await res.text();
-        throw new Error(txt || "Error creating user.");
-      }
+      const res = await register(updatePayload);
 
       Alert.alert("Success", "Account created successfully.", [
         { text: "OK", onPress: () => router.push("/signin") },

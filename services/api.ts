@@ -1,6 +1,6 @@
 import { Buyer } from '@/lib/domain/buyer.model';
 import { Tender } from '@/lib/domain/tender.model';
-import { User } from '@/lib/domain/user.model';
+import { User, UserRegistrationDto } from '@/lib/domain/user.model';
 import * as SecureStore from 'expo-secure-store';
 
 export const TENDERS_CONFIG =  async () =>({
@@ -107,6 +107,21 @@ export const getUserData = async (): Promise<User> => {
   console.log('Fetched user data:', data);
   return data;
 };
+
+
+export const register = async (userData: UserRegistrationDto): Promise<void> => {
+  const res = await fetch(`https://tendering-app-be.onrender.com/api/auth/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
+        });
+  
+        if (res.status !== 201) {
+          const txt = await res.text();
+          throw new Error(txt || "Error creating user.");
+        }
+
+      }
 
 /*
 const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
