@@ -1,8 +1,7 @@
 import { icons } from '@/constants/icons';
-import { User } from '@/lib/domain/user.model';
+import { getUser, User } from '@/services/auth.service';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,9 +13,9 @@ const AppBar = () => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const userLoggedIn = await SecureStore.getItemAsync('user');
+            const userLoggedIn = await getUser();
 
-            setUser(userLoggedIn ? JSON.parse(userLoggedIn) : null);
+            setUser(userLoggedIn);
         };
 
         fetchUser();

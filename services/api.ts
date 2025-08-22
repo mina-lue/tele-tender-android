@@ -1,13 +1,13 @@
 import { Buyer } from '@/lib/domain/buyer.model';
 import { Tender } from '@/lib/domain/tender.model';
 import { User, UserRegistrationDto } from '@/lib/domain/user.model';
-import * as SecureStore from 'expo-secure-store';
+import { getAccessToken, getUser } from './auth.service';
 
 export const TENDERS_CONFIG =  async () =>({
   API_URL: process.env.BACKEND_API_URL,
   headers: {
     accept: 'application/json',
-    Authorization: `Bearer ${await SecureStore.getItemAsync('userToken')}`,
+    Authorization: `Bearer ${await getAccessToken()}`,
   },
 });
 
@@ -90,8 +90,8 @@ export const createTender = async (tenderData: Partial<Tender>) : Promise<Tender
 
 export const getUserData = async (): Promise<User> => {
   const config = await TENDERS_CONFIG();
-  const user = await SecureStore.getItemAsync('user');
-  const userId = user ? JSON.parse(user).id : null;
+  const user = await getUser();
+  const userId = user ? user.id : null;
 
   console.log(`fetching ${config.API_URL}/users/me`)
   const response = await fetch(`https://tendering-app-be.onrender.com/api/users/${userId}`, {

@@ -37,7 +37,7 @@ export default function Index() {
       contentContainerStyle={{ paddingTop: 2, minHeight: "100%" }}
       >
         {tendersLoading && <ActivityIndicator size="large" color="#0000ff" className="mt-10 self-center" />}
-        {tendersError && <View className="flex-1 items-center justify-center mt-10"> <Text>Error loading tenders</Text> </View>}
+        {tendersError && <View className="flex-1 items-center justify-center mt-10 text-gray-200"> <Text>Error loading tenders</Text> </View>}
         {tenders && (<FlatList
           data={tenders}
           renderItem={({ item: tender }) => (
