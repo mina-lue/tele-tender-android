@@ -67,9 +67,10 @@ export const fetchTenderDetails = async (tenderId: string) : Promise<Tender> => 
 
 export const createTender = async (tenderData: Partial<Tender>) : Promise<Tender> => {
   const config = await TENDERS_CONFIG();
+  console.log('tenderData:', tenderData);
 
   console.log(`creating tender at ${config.API_URL}/tenders`)
-  const response = await fetch(`https://tendering-app-be.onrender.com/api/tenders`, {
+  const response = await fetch(`https://tendering-app-be.onrender.com/api/tenders/new`, {
     method: 'POST',
     headers: {
       ...config.headers,
@@ -78,7 +79,7 @@ export const createTender = async (tenderData: Partial<Tender>) : Promise<Tender
     body: JSON.stringify(tenderData)
   });
 
-  if (!response.ok) {
+  if (response.status !== 201) {
     throw new Error('Failed to create tender');
   }
 

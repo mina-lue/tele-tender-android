@@ -10,11 +10,9 @@ interface Props {
   id: number;
   buyerId : string;
   details: string;
-  openAt: string;
-  closeAt: string;
 }
 
-const TenderCard = ({ id, buyerId, details, openAt, closeAt }: Props) => {
+const TenderCard = ({ id, buyerId, details }: Props) => {
   const [buyer, setBuyer] = useState<Buyer | undefined>();
 
   const [timeString, setTimeString] = useState('');
@@ -79,7 +77,7 @@ const TenderCard = ({ id, buyerId, details, openAt, closeAt }: Props) => {
               >
                 {buyer?.name}
               </Text>
-            </View> |
+            </View>
           </View>
           <Text className="text-lg p-2 text-gray-300 first-letter:capitalize" numberOfLines={2}>
             {details}

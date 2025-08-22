@@ -1,6 +1,6 @@
+import { isLoggedIn, setSession } from '@/services/auth.service';
 import { useRouter } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -53,16 +53,18 @@ const LoginScreen = () => {
       const data = await response.json();
       console.log('Login successful:', data);
 
-    
-       await SecureStore.setItemAsync('userToken', data.backendTokens.accessToken);
-       await SecureStore.setItemAsync('userRefreshToken', data.backendTokens.refreshToken);
-       await SecureStore.setItemAsync('userExpiresIn', data.backendTokens.expiresAt.toString());
-       await SecureStore.setItemAsync('user', JSON.stringify({
+
+       await setSession({
+         accessToken: data.backendTokens.accessToken,
+         refreshToken: data.backendTokens.refreshToken,
+         expiresAt: data.backendTokens.expiresAt,
+         user: {
            id: data.user.id,
            email: data.user.email,
            name: data.user.name,
            role: data.user.role
-       }));
+         }
+    });
       router.push('/');
     } catch (error) {
       console.error('Sign in error:', error);
@@ -71,6 +73,16 @@ const LoginScreen = () => {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const loggedIn = await isLoggedIn();
+      if (loggedIn) {
+        router.push('/'); 
+      }
+    };
+    checkAuth();
+  }, []);
 
   return (
     <SafeAreaView className="flex-1 bg-background justify-center items-center p-6">
