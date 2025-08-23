@@ -1,7 +1,6 @@
-// services/authService.ts
 import * as SecureStore from "expo-secure-store";
 
-const KEY = "session"; // one place to store user + tokens
+const KEY = "session"; 
 
 export type User = {
   id: string | number;
@@ -17,8 +16,8 @@ export type Session = {
   expiresAt?: string;
 };
 
-// (optional) in-memory cache to avoid repeated JSON parsing
-let cache: Session | null | undefined; // undefined = not loaded yet
+
+let cache: Session | null | undefined; 
 
 async function load(): Promise<Session | null> {
   if (cache !== undefined) return cache;
@@ -30,9 +29,7 @@ async function load(): Promise<Session | null> {
     if (!raw) return (cache = null);
 
     const data = JSON.parse(raw);
-    // Minimal shape check
     if (data?.user && data?.accessToken) return (cache = data as Session);
-    // Corrupted? clear it
     await SecureStore.deleteItemAsync(KEY);
     return (cache = null);
   } catch {

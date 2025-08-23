@@ -4,7 +4,7 @@ import { User, UserRegistrationDto } from '@/lib/domain/user.model';
 import { getAccessToken, getUser } from './auth.service';
 
 export const TENDERS_CONFIG =  async () =>({
-  API_URL: process.env.BACKEND_API_URL,
+  API_URL: process.env.EXPO_PUBLIC_API_URL,
   headers: {
     accept: 'application/json',
     Authorization: `Bearer ${await getAccessToken()}`,
@@ -15,7 +15,7 @@ export const fetchTenders = async () => {
   const config = await TENDERS_CONFIG();
 
   console.log(`fetching ${config.API_URL}/tenders/recent`)
-  const response = await fetch(`https://tendering-app-be.onrender.com/api/tenders/recent`, { //TODO hardcoded
+  const response = await fetch(`${config.API_URL}/tenders/recent`, {
         method: 'GET',
         headers: config.headers
     });
@@ -32,8 +32,7 @@ export const fetchTenders = async () => {
 export const fetchBuyer = async (buyerId: string) : Promise<Buyer> => {
   const config = await TENDERS_CONFIG();
 
-  console.log(`fetching ${config.API_URL}/buyers/${buyerId}`)
-  const response = await fetch(`https://tendering-app-be.onrender.com/api/users/${buyerId}`, {
+  const response = await fetch(`${config.API_URL}/users/${buyerId}`, {
     method: 'GET',
     headers: config.headers
   });
@@ -50,8 +49,8 @@ export const fetchBuyer = async (buyerId: string) : Promise<Buyer> => {
 export const fetchTenderDetails = async (tenderId: string) : Promise<Tender> => {
   const config = await TENDERS_CONFIG();
 
-  console.log(`fetching ${config.API_URL}/tenders/${tenderId}`)
-  const response = await fetch(`https://tendering-app-be.onrender.com/api/tenders/${tenderId}`, {
+
+  const response = await fetch(`${config.API_URL}/tenders/${tenderId}`, {
     method: 'GET',
     headers: config.headers
   });
@@ -70,7 +69,7 @@ export const createTender = async (tenderData: Partial<Tender>) : Promise<Tender
   console.log('tenderData:', tenderData);
 
   console.log(`creating tender at ${config.API_URL}/tenders`)
-  const response = await fetch(`https://tendering-app-be.onrender.com/api/tenders/new`, {
+  const response = await fetch(`${config.API_URL}/tenders/new`, {
     method: 'POST',
     headers: {
       ...config.headers,
@@ -91,10 +90,8 @@ export const createTender = async (tenderData: Partial<Tender>) : Promise<Tender
 export const getUserData = async (): Promise<User> => {
   const config = await TENDERS_CONFIG();
   const user = await getUser();
-  const userId = user ? user.id : null;
 
-  console.log(`fetching ${config.API_URL}/users/me`)
-  const response = await fetch(`https://tendering-app-be.onrender.com/api/users/${userId}`, {
+  const response = await fetch(`${config.API_URL}/users/${user?.id}`, {
     method: 'GET',
     headers: config.headers
   });
@@ -110,7 +107,9 @@ export const getUserData = async (): Promise<User> => {
 
 
 export const register = async (userData: UserRegistrationDto): Promise<void> => {
-  const res = await fetch(`https://tendering-app-be.onrender.com/api/auth/register`, {
+  const config = await TENDERS_CONFIG();
+  
+  const res = await fetch(`${config.API_URL}/auth/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(userData),
