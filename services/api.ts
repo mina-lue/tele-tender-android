@@ -29,6 +29,40 @@ export const fetchTenders = async () => {
     return data;
 }
 
+export const fetchTendersFiltered = async (filter: 'recent' | 'DRAFT' | 'OPEN' | 'CLOSED') => {
+  const config = await TENDERS_CONFIG();
+
+  if (filter === 'recent') {
+    console.log(`fetching ${config.API_URL}/tenders/my-tenders/recent`)
+    const response = await fetch(`${config.API_URL}/tenders/my-tenders/recent`, {
+      method: 'GET',
+      headers: config.headers
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch tenders');
+    }
+
+    const data = await response.json();
+    console.log('Fetched tenders:', data);
+    return data;
+  }
+
+  console.log(`fetching ${config.API_URL}/tenders/my-tenders/${filter}`)
+  const response = await fetch(`${config.API_URL}/tenders/my-tenders/${filter}`, {
+        method: 'GET',
+        headers: config.headers
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch tenders');
+    }
+
+    const data = await response.json();
+    console.log('Fetched tenders:', data);
+    return data;
+};
+
 export const fetchBuyer = async (buyerId: string) : Promise<Buyer> => {
   const config = await TENDERS_CONFIG();
 
