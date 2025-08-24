@@ -26,7 +26,7 @@ const AppBar = () => {
     setMenuVisible(!isMenuVisible);
   };
 
-  const handleMenuItemPress = (item: '/profile' | '/about' | '/' | '/tenders/new') => {
+  const handleMenuItemPress = (item: '/profile' | '/about' | '/' | '/tenders/new' | '/myTenders') => {
     router.push(item);
     setMenuVisible(false);
   };
@@ -56,6 +56,31 @@ const AppBar = () => {
           {/* Dropdown Menu */}
           {isMenuVisible && (
             <View className="absolute top-12 right-0 w-60 bg-backgroundSec rounded-md shadow-xl py-2 z-50">
+
+              {user?.role === 'BUYER' &&(<TouchableOpacity 
+                className="p-3 border-b border-gray-500 flex-row"
+                onPress={() => handleMenuItemPress('/tenders/new')}
+              >
+                <Ionicons name="add-circle-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
+                <Text className="text-gray-200">Post Tender</Text>
+              </TouchableOpacity>)}
+
+              {user?.role === 'BUYER' &&(<TouchableOpacity 
+                className="p-3 border-b border-gray-500 flex-row"
+                onPress={() => handleMenuItemPress('/myTenders')}
+              >
+                <Ionicons name="document-text-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
+                <Text className="text-gray-200">My Tenders</Text>
+              </TouchableOpacity>)}
+
+              <TouchableOpacity 
+                className="p-3 border-b border-gray-500 flex-row"
+                onPress={() => handleMenuItemPress('/')}
+              >
+                <Ionicons name="document-text-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
+                <Text className="text-gray-200">Tenders</Text>
+              </TouchableOpacity>
+
               <TouchableOpacity 
                 className="p-3 border-b border-gray-500 flex-row"
                 onPress={() => handleMenuItemPress('/profile')}
@@ -71,22 +96,6 @@ const AppBar = () => {
                 <Ionicons name="information-circle-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
                 <Text className="text-gray-200">About</Text>
               </TouchableOpacity>
-
-              <TouchableOpacity 
-                className="p-3 border-b border-gray-500 flex-row"
-                onPress={() => handleMenuItemPress('/')}
-              >
-                <Ionicons name="document-text-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
-                <Text className="text-gray-200">Tenders</Text>
-              </TouchableOpacity>
-
-              {user?.role === 'BUYER' &&(<TouchableOpacity 
-                className="p-3 border-b border-gray-500 flex-row"
-                onPress={() => handleMenuItemPress('/tenders/new')}
-              >
-                <Ionicons name="add-circle-outline" size={22} color="#e5e7eb" style={{ marginRight: 12 }} />
-                <Text className="text-gray-200">Post Tender</Text>
-              </TouchableOpacity>)}
             </View>
           )}
         </View>
