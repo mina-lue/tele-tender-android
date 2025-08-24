@@ -33,8 +33,8 @@ export const fetchTendersFiltered = async (filter: 'recent' | 'DRAFT' | 'OPEN' |
   const config = await TENDERS_CONFIG();
 
   if (filter === 'recent') {
-    console.log(`fetching ${config.API_URL}/tenders/recent`)
-    const response = await fetch(`${config.API_URL}/tenders/recent`, {
+    console.log(`fetching ${config.API_URL}/tenders/my-tenders/recent`)
+    const response = await fetch(`${config.API_URL}/tenders/my-tenders/recent`, {
       method: 'GET',
       headers: config.headers
     });
