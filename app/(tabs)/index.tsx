@@ -1,11 +1,12 @@
 import TenderCard from "@/components/tenderCard";
+import { Tender } from "@/lib/domain/tender.model";
 import { fetchTenders } from "@/services/api";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, ScrollView, Text, View } from "react-native";
 
 export default function Index() {
 
-  const [tenders, setTenders] = useState<any>(null);
+  const [tenders, setTenders] = useState<Tender[] | undefined>(undefined);
   const [tendersError, setTendersError] = useState(false);
   const [tendersLoading, setTendersLoading] = useState(false);
 
@@ -14,7 +15,7 @@ export default function Index() {
   useEffect(() => {
 
     const loadTenders = async ()=>{
-      setTendersLoading(false)
+      setTendersLoading(true)
       try{
         const tendersLoaded = await fetchTenders();
         setTenders(tendersLoaded);
@@ -37,7 +38,7 @@ export default function Index() {
       contentContainerStyle={{ paddingTop: 2, minHeight: "100%" }}
       >
         {tendersLoading && <ActivityIndicator size="large" color="#0000ff" className="mt-10 self-center" />}
-        {tendersError && <View className="flex-1 items-center justify-center mt-10 text-gray-200"> <Text>Error loading tenders</Text> </View>}
+        {tendersError && <View className="flex-1 items-center justify-center mt-10 text-red-600"> <Text>Error loading tenders</Text> </View>}
         {tenders && (<FlatList
           data={tenders}
           renderItem={({ item: tender }) => (
