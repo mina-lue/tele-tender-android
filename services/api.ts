@@ -33,8 +33,8 @@ export const fetchTendersFiltered = async (filter: 'recent' | 'DRAFT' | 'OPEN' |
   const config = await TENDERS_CONFIG();
 
   if (filter === 'recent') {
-    console.log(`fetching ${config.API_URL}/tenders/my-tenders/recent`)
-    const response = await fetch(`${config.API_URL}/tenders/my-tenders/recent`, {
+    console.log(`fetching ${config.API_URL}/tenders/recent`)
+    const response = await fetch(`${config.API_URL}/tenders/recent`, {
       method: 'GET',
       headers: config.headers
     });
@@ -64,7 +64,7 @@ export const fetchTendersFiltered = async (filter: 'recent' | 'DRAFT' | 'OPEN' |
 };
 
 
-export const deleteTender = async (id: string) => {
+export const deleteTender = async (id: number) => {
   const config = await TENDERS_CONFIG();
 
   const response = await fetch(`${config.API_URL}/tenders/${id}`, {
@@ -79,7 +79,7 @@ export const deleteTender = async (id: string) => {
   console.log(`Deleted tender with id: ${id}`);
 };
 
-export const markTenderAsClosed = async (id: string) => {
+export const markTenderAsClosed = async (id: number) => {
   const config = await TENDERS_CONFIG();
 
   const response = await fetch(`${config.API_URL}/tenders/${id}/complete`, {

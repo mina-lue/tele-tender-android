@@ -35,10 +35,10 @@ const TenderDetails = () => {
       <Text className="text-gray-200 text-2xl">Buyer</Text>
       <View className="flex-col items-end">
           <Text className="text-gray-300 text-sm bg-gradient-to-t from-green-800 to-green-900 px-2 py-1">
-            opens at: {tender.openAt}
+            opens at: {new Date(tender.openAt).toLocaleDateString()} - {new Date(tender.openAt).toLocaleTimeString()}
           </Text>
           <Text className="text-gray-300 text-sm bg-gradient-to-t from-green-800 to-green-900 px-2 py-1">
-            closes at: {tender.closeAt}
+            closes at: {new Date(tender.closeAt).toLocaleDateString()} - {new Date(tender.closeAt).toLocaleTimeString()}
           </Text>
         </View>
 
