@@ -63,6 +63,37 @@ export const fetchTendersFiltered = async (filter: 'recent' | 'DRAFT' | 'OPEN' |
     return data;
 };
 
+
+export const deleteTender = async (id: string) => {
+  const config = await TENDERS_CONFIG();
+
+  const response = await fetch(`${config.API_URL}/tenders/${id}`, {
+    method: 'DELETE',
+    headers: config.headers
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete tender');
+  }
+
+  console.log(`Deleted tender with id: ${id}`);
+};
+
+export const markTenderAsClosed = async (id: string) => {
+  const config = await TENDERS_CONFIG();
+
+  const response = await fetch(`${config.API_URL}/tenders/${id}/complete`, {
+    method: 'POST',
+    headers: config.headers
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to mark tender as complete');
+  }
+
+  console.log(`Marked tender with id: ${id} as complete`);
+};
+
 export const fetchBuyer = async (buyerId: string) : Promise<Buyer> => {
   const config = await TENDERS_CONFIG();
 
@@ -155,6 +186,9 @@ export const register = async (userData: UserRegistrationDto): Promise<void> => 
         }
 
       }
+
+
+
 
 /*
 const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
