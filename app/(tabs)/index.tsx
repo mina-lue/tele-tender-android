@@ -35,7 +35,7 @@ export default function Index() {
     >
       <ScrollView className="flex-1 px-2 "
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingTop: 2, minHeight: "100%" }}
+      contentContainerStyle={{ paddingTop: 2, minHeight: "100%" , minWidth: "100%"}}
       >
         {tendersLoading && <ActivityIndicator size="large" color="#0000ff" className="mt-10 self-center" />}
         {tendersError && <View className="flex-1 items-center justify-center mt-10 text-red-600"> <Text>Error loading tenders</Text> </View>}
