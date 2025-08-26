@@ -4,7 +4,7 @@ export interface Tender {
   details: string;
   openAt: string;
   closeAt: string;
-  documentUrl?: string;
+  urlToDoc?: string;
   document_buy_option: boolean;
   documentPrice?: string;
   status: 'CLOSED' | 'OPEN' | 'DRAFT';

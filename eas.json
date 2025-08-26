@@ -1,0 +1,17 @@
+{
+  "cli": { "version": ">= 16.17.4" },
+  "build": {
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleDebug"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://tendering-app-be.onrender.com/api",
+        "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "dwvt63sbv",
+        "EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET": "tender-app"
+      }
+    }
+  }
+}

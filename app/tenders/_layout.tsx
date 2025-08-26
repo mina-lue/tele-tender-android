@@ -40,5 +40,21 @@ export default function RootLayout() {
         </View>
       </SafeAreaView>
     )}} />
+    <Stack.Screen name="update/[id]" options={{ header: () => (
+      <SafeAreaView edges={['top']} className="bg-backgroundSec shadow-md">
+        <View className="flex-row items-center p-4">
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            className="p-2 mr-2"
+          >
+            <Ionicons name="arrow-back" size={24} color="#e5e7eb" />
+          </TouchableOpacity>
+
+          <Text className="text-xl font-bold text-gray-200">
+            Edit Tender Details
+          </Text>
+        </View>
+      </SafeAreaView>
+    )}} />
   </Stack>;
 }

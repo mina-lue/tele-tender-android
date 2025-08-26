@@ -55,7 +55,7 @@ const AppBar = () => {
           
           {/* Dropdown Menu */}
           {isMenuVisible && (
-            <View className="absolute top-12 right-0 w-60 bg-backgroundSec rounded-md shadow-xl py-2 z-50">
+            <View className="absolute top-12 right-0 w-60 bg-backgroundSec rounded-md shadow-xl py-2 z-50 -mr-3">
 
               {user?.role === 'BUYER' &&(<TouchableOpacity 
                 className="p-3 border-b border-gray-500 flex-row"

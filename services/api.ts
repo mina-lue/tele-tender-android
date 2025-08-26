@@ -33,7 +33,6 @@ export const fetchTendersFiltered = async (filter: 'recent' | 'DRAFT' | 'OPEN' |
   const config = await TENDERS_CONFIG();
 
   if (filter === 'recent') {
-    console.log(`fetching ${config.API_URL}/tenders/my-tenders/recent`)
     const response = await fetch(`${config.API_URL}/tenders/my-tenders/recent`, {
       method: 'GET',
       headers: config.headers
@@ -47,8 +46,7 @@ export const fetchTendersFiltered = async (filter: 'recent' | 'DRAFT' | 'OPEN' |
     console.log('Fetched tenders:', data);
     return data;
   }
-
-  console.log(`fetching ${config.API_URL}/tenders/my-tenders/${filter}`)
+  
   const response = await fetch(`${config.API_URL}/tenders/my-tenders/${filter}`, {
         method: 'GET',
         headers: config.headers
@@ -82,8 +80,8 @@ export const deleteTender = async (id: number) => {
 export const markTenderAsClosed = async (id: number) => {
   const config = await TENDERS_CONFIG();
 
-  const response = await fetch(`${config.API_URL}/tenders/${id}/complete`, {
-    method: 'POST',
+  const response = await fetch(`${config.API_URL}/tenders/my-tenders/close/${id}`, {
+    method: 'PUT',
     headers: config.headers
   });
 
@@ -93,6 +91,20 @@ export const markTenderAsClosed = async (id: number) => {
 
   console.log(`Marked tender with id: ${id} as complete`);
 };
+
+export const updateTender =async  (id: number, tenderData: any) =>{
+  const config = await TENDERS_CONFIG();
+
+  const response = await fetch(`${config.API_URL}/tenders/my-tenders/update/${id}`, {
+    method: 'PUT',
+    headers: config.headers,
+    body: JSON.stringify(tenderData)
+  })
+
+  if(!response.ok) {
+    throw new Error('Failed to update tender')
+  }
+}
 
 export const fetchBuyer = async (buyerId: string) : Promise<Buyer> => {
   const config = await TENDERS_CONFIG();
