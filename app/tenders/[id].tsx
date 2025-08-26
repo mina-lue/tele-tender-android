@@ -1,5 +1,5 @@
 import { Tender } from "@/lib/domain/tender.model";
-import { fetchTenderDetails } from "@/services/api";
+import {fetchBuyer, fetchTenderDetails} from "@/services/api";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
@@ -9,6 +9,7 @@ const TenderDetails = () => {
   const [tenderLoadingError, setTenderLoadingError] = React.useState<string | null>(null);
   const [tender, setTender] = React.useState<Tender | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [buyername, setBuyername] = React.useState<string | null>(null);
 
   useEffect(() => {
     const fetchTender = async () => {
@@ -16,6 +17,8 @@ const TenderDetails = () => {
         setLoading(true);
         const data = await fetchTenderDetails(id as string);
         setTender(data);
+        const buyer = await fetchBuyer(data.organizationId as string);
+        setBuyername(buyer.name);
       } catch (error) {
         setTenderLoadingError(error instanceof Error ? error.message : "An unknown error occurred");
       } finally {
@@ -32,7 +35,7 @@ const TenderDetails = () => {
       {loading && <Text className="text-gray-500 bg-background flex-1 items-center justify-center">Loading...</Text>}
 
     {tender &&(<View className="bg-background flex-1 p-4">
-      <Text className="text-gray-200 text-2xl">Buyer</Text>
+      <Text className="text-gray-200 text-2xl">{buyername}</Text>
       <View className="flex-col items-end">
           <Text className="text-gray-300 text-sm bg-gradient-to-t from-green-800 to-green-900 px-2 py-1">
             opens at: {new Date(tender.openAt).toLocaleDateString()} - {new Date(tender.openAt).toLocaleTimeString()}

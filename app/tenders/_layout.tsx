@@ -40,7 +40,7 @@ export default function RootLayout() {
         </View>
       </SafeAreaView>
     )}} />
-    <Stack.Screen name="update/[id]" options={{ header: () => (
+    <Stack.Screen name="update" options={{ header: () => (
       <SafeAreaView edges={['top']} className="bg-backgroundSec shadow-md">
         <View className="flex-row items-center p-4">
           <TouchableOpacity
