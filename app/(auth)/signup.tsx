@@ -213,7 +213,7 @@ const SignupScreen = () => {
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
                       placeholder="Company or Person Name"
-                      className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800"
+                      className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800 placeholder-gray-500 bg-blue-100"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
@@ -249,7 +249,7 @@ const SignupScreen = () => {
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
                       placeholder="Phone"
-                      className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800"
+                      className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800 placeholder-gray-500 bg-blue-100"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
@@ -270,7 +270,7 @@ const SignupScreen = () => {
                   placeholder="Email"
                   autoCapitalize="none"
                   keyboardType="email-address"
-                  className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800"
+                  className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800 placeholder-gray-500 bg-blue-100"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -287,7 +287,7 @@ const SignupScreen = () => {
                 <TextInput
                   placeholder="Password"
                   secureTextEntry
-                  className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800"
+                  className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800 placeholder-gray-500 bg-blue-100"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -304,7 +304,7 @@ const SignupScreen = () => {
                 <TextInput
                   placeholder="Confirm Password"
                   secureTextEntry
-                  className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800"
+                  className="w-full mb-3 p-3 border border-gray-300 rounded-xl text-gray-800 placeholder-gray-500 bg-blue-100"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
